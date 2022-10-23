@@ -17,8 +17,3 @@ const createGalery = collection => {
 createGalery(galleryItems)
 
 
-const onImgClick = event => {
-    event.preventDefault();
-    const lightbox = new SimpleLightbox('.gallery a', {captionsData:'alt',captionDelay:250});
-}
-galaryDiv.addEventListener('click', onImgClick);
