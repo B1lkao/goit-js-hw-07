@@ -1,38 +1,42 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
-const galaryDiv = document.querySelector('.gallery');
 
-const createGalary = collection => {
-    return collection.map(({preview, original, description}) => {
-        const markingElement = `<div class="gallery__item">
-  <a class="gallery__link" href="${original}">
+console.log(galleryItems);
+
+const render = galleryItems.reduce(
+  (acc, { description, original, preview }) =>
+    acc +
+    `<div class="gallery__item"><a class="gallery__link" href="${original}">
     <img
       class="gallery__image"
       src="${preview}"
       data-source="${original}"
       alt="${description}"
     />
-  </a>
-</div>` ;
-        galaryDiv.insertAdjacentHTML('afterbegin', markingElement);
-    })
+  </a></div>`,
+  ''
+);
+// console.log(render);
+
+const gallery = document.querySelector('.gallery');
+gallery.insertAdjacentHTML('afterbegin', render);
+gallery.addEventListener('click', handleImgClick);
+
+// const instance = basicLightbox.create(`<img class="gallery__image">`);
+
+function handleImgClick(event) {
+  event.preventDefault();
+  //   if (event.target === event.currentTarget) return;
+  if (!event.target.classList.contains('gallery__image')) return;
+  const instance = basicLightbox.create(`<img src="${event.target.dataset.source}">`);
+  // instance.element().querySelector('.gallery__image').src = event.target.dataset.source;
+  instance.show();
+
+  document.addEventListener('keydown', handleDownEscape);
+  function handleDownEscape(event) {
+    if (event.code !== 'Escape') return;
+    if (event.code === 'Escape') instance.close();
+    document.removeEventListener('keydown', handleDownEscape);
+    // console.log(event.code);
+  }
 }
-
-createGalary(galleryItems);
-
-
-const onImgClick = event => {
-    event.preventDefault();
-    const linkOriginal = event.target.dataset.source;
-    if (event.target.nodeName !== 'IMG') { return };
-    const instance = basicLightbox.create(`
-    <img src="${linkOriginal}" width="800" height="600">`)
-    instance.show();
-
-    const onEscClick=event=>{ if (event.code === 'Escape') {
-        instance.close();
-        galaryDiv.removeEventListener('keydown', onEscClick)}}
-    galaryDiv.addEventListener('keydown', onEscClick)
-}
-
-galaryDiv.addEventListener('click', onImgClick);
