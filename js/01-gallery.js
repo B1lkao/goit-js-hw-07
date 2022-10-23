@@ -1,42 +1,39 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
+const gallery = document.querySelector('.gallery');
 
-console.log(galleryItems);
-
-const render = galleryItems.reduce(
-  (acc, { description, original, preview }) =>
-    acc +
-    `<div class="gallery__item"><a class="gallery__link" href="${original}">
+const itemImg = galleryItems.reduce((acc, { preview, original, description }) => acc + `<div class="gallery__item">
+  <a class="gallery__link" href='${original}'>
     <img
       class="gallery__image"
-      src="${preview}"
-      data-source="${original}"
-      alt="${description}"
+      src='${preview}'
+      data-source='${original}'
+      alt='${description}'
     />
-  </a></div>`,
-  ''
-);
-// console.log(render);
+  </a>
+</div>`, '');
 
-const gallery = document.querySelector('.gallery');
-gallery.insertAdjacentHTML('afterbegin', render);
-gallery.addEventListener('click', handleImgClick);
+gallery.insertAdjacentHTML('beforeend', itemImg);
+gallery.addEventListener('click', onImgClick);
 
-// const instance = basicLightbox.create(`<img class="gallery__image">`);
-
-function handleImgClick(event) {
-  event.preventDefault();
-  //   if (event.target === event.currentTarget) return;
-  if (!event.target.classList.contains('gallery__image')) return;
-  const instance = basicLightbox.create(`<img src="${event.target.dataset.source}">`);
-  // instance.element().querySelector('.gallery__image').src = event.target.dataset.source;
-  instance.show();
-
-  document.addEventListener('keydown', handleDownEscape);
-  function handleDownEscape(event) {
-    if (event.code !== 'Escape') return;
-    if (event.code === 'Escape') instance.close();
-    document.removeEventListener('keydown', handleDownEscape);
-    // console.log(event.code);
+function onImgClick(e) {
+  e.preventDefault();
+    if (!e.target.classList.contains('gallery__image')) {
+        return;
   }
+  
+  const  source = e.target.getAttribute('data-source')
+  const instance = basicLightbox.create(`
+    <img src="${source}" width="800" height="600">
+  `)
+  instance.show();
+  console.log(gallery);
+
+  gallery.addEventListener('keydown',onClose);
+  function onClose (e) {
+    if (e.key === 'Escape')
+    {instance.close();
+    gallery.removeEventListener('keydown', onClose);  }
+  };
 }
+
