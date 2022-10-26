@@ -31,9 +31,9 @@ function onImgClick(e) {
 
   document.addEventListener('keydown',onClose);
   function onClose (e) {
-    if (e.key === 'Escape')
-    {instance.close();
-    gallery.removeEventListener('keydown', onClose);  }
+    if (e.code !== 'Escape') return;
+    if (e.code === 'Escape') instance.close();
+    gallery.removeEventListener('keydown', onClose);  
   };
 }
 
