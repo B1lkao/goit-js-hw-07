@@ -29,11 +29,11 @@ function onImgClick(e) {
   instance.show();
   console.log(gallery);
 
-  document.addEventListener('keydown',onClose);
-  function onClose (e) {
-    if (e.code !== 'Escape') return;
-    if (e.code === 'Escape') instance.close();
-    document.removeEventListener('keydown', onClose);  
-  };
+  // document.addEventListener('keydown',onClose);
+  // function onClose (e) {
+  //   if (e.code !== 'Escape') return;
+  //   if (e.code === 'Escape') instance.close();
+  //   document.removeEventListener('keydown', onClose);  
+  // };
 }
 
