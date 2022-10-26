@@ -33,7 +33,7 @@ function onImgClick(e) {
   function onClose (e) {
     if (e.code !== 'Escape') return;
     if (e.code === 'Escape') instance.close();
-    gallery.removeEventListener('keydown', onClose);  
+    document.removeEventListener('keydown', onClose);  
   };
 }
 
