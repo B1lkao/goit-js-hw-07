@@ -29,7 +29,7 @@ function onImgClick(e) {
   instance.show();
   console.log(gallery);
 
-  gallery.addEventListener('keydown',onClose);
+  document.addEventListener('keydown',onClose);
   function onClose (e) {
     if (e.key === 'Escape')
     {instance.close();
